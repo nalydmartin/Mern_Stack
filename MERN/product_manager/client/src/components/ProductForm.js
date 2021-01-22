@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import axios from 'axios';
 
 export default (props) => {
-    const {initialTitle, initialPrice, initialDescription, onSubmitProp} = props;
+    const {initialTitle, initialPrice, initialDescription, onSubmitProp, errors} = props;
     const [title, setTitle] = useState(initialTitle);
     const [price, setPrice] = useState(initialPrice);
     const [description, setDescription] = useState(initialDescription);
@@ -24,7 +24,9 @@ export default (props) => {
 
     return (
         <form onSubmit={submitHandler}>
-
+            {errors ? errors.map((err, idx) => 
+            <p key={idx}>{err}</p>
+            ) : ""}
             <p>
                 <label>Title</label>
                 <input 

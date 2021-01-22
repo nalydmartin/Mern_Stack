@@ -20,9 +20,19 @@ export default () => {
     //     setProducts(products.filter(product => product._id != productID));
     // }
 
+    const [errors, setErrors] = useState([]);
+
     const createProduct = (product) => {
         axios.post('http://localhost:8000/api/products', product)
-        .then(res => console.log(res));
+        .then(res => console.log(res))
+        .catch(err => {
+            const errResponse = err.response.data.errors;
+            const errArray = [];
+            for (const key of Object.keys(errResponse)) {
+                errArray.push(errResponse[key].message)
+            }
+            setErrors(errArray);
+        })
         }
     
 
@@ -32,7 +42,9 @@ export default () => {
             onSubmitProp={createProduct} 
             initialTitle="" 
             initialPrice="" 
-            initialDescription="" />
+            initialDescription="" 
+            errors = {errors}
+            />
             <hr />
 
             <ProductList />
